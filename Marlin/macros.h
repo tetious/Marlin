@@ -24,6 +24,9 @@
 #define MACROS_H
 
 #define NUM_AXIS 4
+#define XYZE 4
+#define ABC  3
+#define XYZ  3
 
 #define FORCE_INLINE __attribute__((always_inline)) inline
 
@@ -117,5 +120,8 @@
 #define NOOP do{} while(0)
 
 #define CEILING(x,y) (((x) + (y) - 1) / (y))
+
+#define MAX3(a, b, c)    max(max(a, b), c)
+#define MAX4(a, b, c, d) max(max(max(a, b), c), d)
 
 #endif //__MACROS_H
