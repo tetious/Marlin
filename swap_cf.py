@@ -13,7 +13,10 @@ marlin_config_path = os.path.join(current_dir, "Marlin/Configuration.h")
 
 if os.path.exists(config_file_path):
     print("Switching to config file: %s." % config_file_name)
-    os.remove(marlin_config_path)
+    try:
+        os.remove(marlin_config_path)
+    except OSError:
+        pass
     os.link(config_file_path, marlin_config_path)
 else:
     print("Could not find configuration file: [%s]." % config_file_path)
