@@ -114,3 +114,4 @@ applet/
 # Debug files
 *.dSYM/
 *.su
+Marlin/Configuration.h
