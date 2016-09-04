@@ -284,10 +284,10 @@
   #define PID_INTEGRAL_DRIVE_MAX PID_MAX  //limit for the integral term
   #define K1 0.95 //smoothing factor within the PID
 
-  // FT-5
-  #define  DEFAULT_Kp 24.80
-  #define  DEFAULT_Ki 1.67
-  #define  DEFAULT_Kd 92.03
+  // FT-5 with fake E3D V6
+  #define  DEFAULT_Kp 28.61
+  #define  DEFAULT_Ki 3.23
+  #define  DEFAULT_Kd 63.28
 
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
   // Ultimaker
