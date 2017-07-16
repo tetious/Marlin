@@ -17,6 +17,6 @@ if os.path.exists(config_file_path):
         os.remove(marlin_config_path)
     except OSError:
         pass
-    os.link(config_file_path, marlin_config_path)
+    os.symlink(config_file_path, marlin_config_path)
 else:
     print("Could not find configuration file: [%s]." % config_file_path)
