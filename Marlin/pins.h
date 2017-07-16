@@ -20,8 +20,20 @@
  *
  */
 
-#ifndef PINS_H
-#define PINS_H
+/**
+ * Include pins definitions
+ *
+ * Pins numbering schemes:
+ *
+ *  - Digital I/O pin number if used by READ/WRITE macros. (e.g., X_STEP_DIR)
+ *    The FastIO headers map digital pins to their ports and functions.
+ *
+ *  - Analog Input number if used by analogRead or DAC. (e.g., TEMP_n_PIN)
+ *    These numbers are the same in any pin mapping.
+ */
+
+#ifndef __PINS_H__
+#define __PINS_H__
 
 #if MB(GEN7_CUSTOM)
   #include "pins_GEN7_CUSTOM.h"
@@ -37,8 +49,12 @@
   #include "pins_CNCONTROLS_12.h"
 #elif MB(CHEAPTRONIC)
   #include "pins_CHEAPTRONIC.h"
+#elif MB(CHEAPTRONIC_V2)
+  #include "pins_CHEAPTRONICv2.h"
 #elif MB(SETHI)
   #include "pins_SETHI.h"
+#elif MB(MIGHTYBOARD_REVE)
+  #include "pins_MIGHTYBOARD_REVE.h"
 #elif MB(RAMPS_OLD)
   #include "pins_RAMPS_OLD.h"
 #elif MB(RAMPS_13_EFB)
@@ -91,6 +107,8 @@
   #include "pins_AZTEEG_X3.h"
 #elif MB(AZTEEG_X3_PRO)
   #include "pins_AZTEEG_X3_PRO.h"
+#elif MB(ANET_10)
+  #include "pins_ANET_10.h"
 #elif MB(ULTIMAKER)
   #include "pins_ULTIMAKER.h"
 #elif MB(ULTIMAKER_OLD)
@@ -131,6 +149,9 @@
   #include "pins_MEGATRONICS_2.h"
 #elif MB(MEGATRONICS_3)
   #include "pins_MEGATRONICS_3.h"
+#elif MB(MEGATRONICS_31)
+  #define MEGATRONICS_31
+  #include "pins_MEGATRONICS_3.h"
 #elif MB(OMCA_A)
   #include "pins_OMCA_A.h"
 #elif MB(OMCA)
@@ -161,14 +182,14 @@
   #include "pins_MEGACONTROLLER.h"
 #elif MB(BQ_ZUM_MEGA_3D)
   #include "pins_BQ_ZUM_MEGA_3D.h"
-#elif MB(99)
-  #include "pins_99.h"
-#elif MB(AJ4P)
-  #include "pins_AJ4P.h"
+#elif MB(SCOOVO_X9H)
+  #include "pins_SCOOVO_X9H.h"
 #elif MB(MKS_13)
   #include "pins_MKS_13.h"
 #elif MB(SAINSMART_2IN1)
   #include "pins_SAINSMART_2IN1.h"
+#elif MB(ZRIB_V20)
+  #include "pins_ZRIB_V20.h"
 #else
   #error "Unknown MOTHERBOARD value set in Configuration.h"
 #endif
@@ -214,8 +235,8 @@
 #ifndef FAN2_PIN
   #define FAN2_PIN -1
 #endif
-#ifndef CONTROLLERFAN_PIN
-  #define CONTROLLERFAN_PIN  -1
+#ifndef CONTROLLER_FAN_PIN
+  #define CONTROLLER_FAN_PIN  -1
 #endif
 
 #ifndef HEATER_0_PIN
@@ -229,6 +250,9 @@
 #endif
 #ifndef HEATER_3_PIN
   #define HEATER_3_PIN -1
+#endif
+#ifndef HEATER_4_PIN
+  #define HEATER_4_PIN -1
 #endif
 #ifndef HEATER_BED_PIN
   #define HEATER_BED_PIN -1
@@ -245,6 +269,9 @@
 #endif
 #ifndef TEMP_3_PIN
   #define TEMP_3_PIN -1
+#endif
+#ifndef TEMP_4_PIN
+  #define TEMP_4_PIN -1
 #endif
 #ifndef TEMP_BED_PIN
   #define TEMP_BED_PIN -1
@@ -272,16 +299,50 @@
   #define SUICIDE_PIN -1
 #endif
 
+#ifndef MAX_EXTRUDERS
+  #define MAX_EXTRUDERS 5
+#endif
+
 // Marlin needs to account for pins that equal -1
-#define marlinAnalogInputToDigitalPin(p) ((p) == -1 ? -1 : (p) + 0xA0)
+#define marlinAnalogInputToDigitalPin(p) ((p) == -1 ? -1 : analogInputToDigitalPin(p))
+
+//
+// Assign auto fan pins if needed
+//
+#if !defined(E0_AUTO_FAN_PIN) && defined(ORIG_E0_AUTO_FAN_PIN)
+  #define E0_AUTO_FAN_PIN ORIG_E0_AUTO_FAN_PIN
+#endif
+#if !defined(E1_AUTO_FAN_PIN) && defined(ORIG_E1_AUTO_FAN_PIN)
+  #define E1_AUTO_FAN_PIN ORIG_E1_AUTO_FAN_PIN
+#endif
+#if !defined(E2_AUTO_FAN_PIN) && defined(ORIG_E2_AUTO_FAN_PIN)
+  #define E2_AUTO_FAN_PIN ORIG_E2_AUTO_FAN_PIN
+#endif
+#if !defined(E3_AUTO_FAN_PIN) && defined(ORIG_E3_AUTO_FAN_PIN)
+  #define E3_AUTO_FAN_PIN ORIG_E3_AUTO_FAN_PIN
+#endif
+#if !defined(E4_AUTO_FAN_PIN) && defined(ORIG_E4_AUTO_FAN_PIN)
+  #define E4_AUTO_FAN_PIN ORIG_E4_AUTO_FAN_PIN
+#endif
 
 // List of pins which to ignore when asked to change by gcode, 0 and 1 are RX and TX, do not mess with those!
 #define _E0_PINS E0_STEP_PIN, E0_DIR_PIN, E0_ENABLE_PIN, E0_MS1_PIN, E0_MS2_PIN,
 #define _E1_PINS
 #define _E2_PINS
 #define _E3_PINS
+#define _E4_PINS
 
-#if EXTRUDERS > 1
+#if ENABLED(SWITCHING_EXTRUDER)
+                      // Tools 0 and 1 use E0
+  #if EXTRUDERS > 2   // Tools 2 and 3 use E1
+    #undef _E1_PINS
+    #define _E1_PINS E1_STEP_PIN, E1_DIR_PIN, E1_ENABLE_PIN, E1_MS1_PIN, E1_MS2_PIN,
+    #if EXTRUDERS > 4 // Tools 4 and 5 use E2
+      #undef _E2_PINS
+      #define _E2_PINS E2_STEP_PIN, E2_DIR_PIN, E2_ENABLE_PIN,
+    #endif
+  #endif
+#elif EXTRUDERS > 1
   #undef _E1_PINS
   #define _E1_PINS E1_STEP_PIN, E1_DIR_PIN, E1_ENABLE_PIN, E1_MS1_PIN, E1_MS2_PIN,
   #if EXTRUDERS > 2
@@ -290,26 +351,35 @@
     #if EXTRUDERS > 3
       #undef _E3_PINS
       #define _E3_PINS E3_STEP_PIN, E3_DIR_PIN, E3_ENABLE_PIN,
-    #endif
-  #endif
-#endif
+      #if EXTRUDERS > 4
+        #undef _E4_PINS
+        #define _E4_PINS E4_STEP_PIN, E4_DIR_PIN, E4_ENABLE_PIN,
+      #endif // EXTRUDERS > 4
+    #endif // EXTRUDERS > 3
+  #endif // EXTRUDERS > 2
+#endif // EXTRUDERS > 1
 
-#define _H0_PINS HEATER_0_PIN, EXTRUDER_0_AUTO_FAN_PIN, marlinAnalogInputToDigitalPin(TEMP_0_PIN),
+#define _H0_PINS HEATER_0_PIN, E0_AUTO_FAN_PIN, marlinAnalogInputToDigitalPin(TEMP_0_PIN),
 #define _H1_PINS
 #define _H2_PINS
 #define _H3_PINS
+#define _H4_PINS
 
 #if HOTENDS > 1
   #undef _H1_PINS
-  #define _H1_PINS HEATER_1_PIN, EXTRUDER_1_AUTO_FAN_PIN, marlinAnalogInputToDigitalPin(TEMP_1_PIN),
+  #define _H1_PINS HEATER_1_PIN, E1_AUTO_FAN_PIN, marlinAnalogInputToDigitalPin(TEMP_1_PIN),
   #if HOTENDS > 2
     #undef _H2_PINS
-    #define _H2_PINS HEATER_2_PIN, EXTRUDER_2_AUTO_FAN_PIN, marlinAnalogInputToDigitalPin(TEMP_2_PIN),
+    #define _H2_PINS HEATER_2_PIN, E2_AUTO_FAN_PIN, marlinAnalogInputToDigitalPin(TEMP_2_PIN),
     #if HOTENDS > 3
       #undef _H3_PINS
-      #define _H3_PINS HEATER_3_PIN, EXTRUDER_3_AUTO_FAN_PIN, marlinAnalogInputToDigitalPin(TEMP_3_PIN),
-    #endif
-  #endif
+      #define _H3_PINS HEATER_3_PIN, E3_AUTO_FAN_PIN, marlinAnalogInputToDigitalPin(TEMP_3_PIN),
+      #if HOTENDS > 4
+        #undef _H4_PINS
+        #define _H4_PINS HEATER_4_PIN, marlinAnalogInputToDigitalPin(TEMP_4_PIN),
+      #endif // HOTENDS > 4
+    #endif // HOTENDS > 3
+  #endif // HOTENDS > 2
 #elif ENABLED(MIXING_EXTRUDER)
   #undef _E1_PINS
   #define _E1_PINS E1_STEP_PIN, E1_DIR_PIN, E1_ENABLE_PIN,
@@ -319,9 +389,13 @@
     #if MIXING_STEPPERS > 3
       #undef _E3_PINS
       #define _E3_PINS E3_STEP_PIN, E3_DIR_PIN, E3_ENABLE_PIN,
-    #endif
-  #endif
-#endif
+      #if MIXING_STEPPERS > 4
+        #undef _E4_PINS
+        #define _E4_PINS E4_STEP_PIN, E4_DIR_PIN, E4_ENABLE_PIN,
+      #endif // MIXING_STEPPERS > 4
+    #endif // MIXING_STEPPERS > 3
+  #endif // MIXING_STEPPERS > 2
+#endif // MIXING_STEPPERS > 1
 
 #define BED_PINS HEATER_BED_PIN, marlinAnalogInputToDigitalPin(TEMP_BED_PIN),
 
@@ -361,7 +435,7 @@
 //
 // Disable unused endstop / probe pins
 //
-#if ENABLED(DISABLE_Z_MIN_PROBE_ENDSTOP) || DISABLED(Z_MIN_PROBE_ENDSTOP) // Allow code to compile regardless of Z_MIN_PROBE_ENDSTOP setting.
+#if DISABLED(Z_MIN_PROBE_ENDSTOP)
   #undef Z_MIN_PROBE_PIN
   #define Z_MIN_PROBE_PIN    -1
 #endif
@@ -413,6 +487,9 @@
     #define X2_STEP_PIN   _EPIN(E_STEPPERS, STEP)
     #define X2_DIR_PIN    _EPIN(E_STEPPERS, DIR)
     #define X2_ENABLE_PIN _EPIN(E_STEPPERS, ENABLE)
+    #if X2_ENABLE_PIN == 0
+      #error "No E stepper plug left for X2!"
+    #endif
   #endif
   #undef _X2_PINS
   #define _X2_PINS X2_STEP_PIN, X2_DIR_PIN, X2_ENABLE_PIN,
@@ -427,6 +504,9 @@
     #define Y2_STEP_PIN   _EPIN(Y2_E_INDEX, STEP)
     #define Y2_DIR_PIN    _EPIN(Y2_E_INDEX, DIR)
     #define Y2_ENABLE_PIN _EPIN(Y2_E_INDEX, ENABLE)
+    #if Y2_ENABLE_PIN == 0
+      #error "No E stepper plug left for Y2!"
+    #endif
   #endif
   #undef _Y2_PINS
   #define _Y2_PINS Y2_STEP_PIN, Y2_DIR_PIN, Y2_ENABLE_PIN,
@@ -441,6 +521,9 @@
     #define Z2_STEP_PIN   _EPIN(Z2_E_INDEX, STEP)
     #define Z2_DIR_PIN    _EPIN(Z2_E_INDEX, DIR)
     #define Z2_ENABLE_PIN _EPIN(Z2_E_INDEX, ENABLE)
+    #if Z2_ENABLE_PIN == 0
+      #error "No E stepper plug left for Z2!"
+    #endif
   #endif
   #undef _Z2_PINS
   #define _Z2_PINS Z2_STEP_PIN, Z2_DIR_PIN, Z2_ENABLE_PIN,
@@ -450,9 +533,9 @@
     X_STEP_PIN, X_DIR_PIN, X_ENABLE_PIN, X_MIN_PIN, X_MAX_PIN, \
     Y_STEP_PIN, Y_DIR_PIN, Y_ENABLE_PIN, Y_MIN_PIN, Y_MAX_PIN, \
     Z_STEP_PIN, Z_DIR_PIN, Z_ENABLE_PIN, Z_MIN_PIN, Z_MAX_PIN, Z_MIN_PROBE_PIN, \
-    PS_ON_PIN, HEATER_BED_PIN, FAN_PIN, FAN1_PIN, FAN2_PIN, CONTROLLERFAN_PIN, \
-    _E0_PINS _E1_PINS _E2_PINS _E3_PINS BED_PINS \
-    _H0_PINS _H1_PINS _H2_PINS _H3_PINS \
+    PS_ON_PIN, HEATER_BED_PIN, FAN_PIN, FAN1_PIN, FAN2_PIN, CONTROLLER_FAN_PIN, \
+    _E0_PINS _E1_PINS _E2_PINS _E3_PINS _E4_PINS BED_PINS \
+    _H0_PINS _H1_PINS _H2_PINS _H3_PINS _H4_PINS \
     _X2_PINS _Y2_PINS _Z2_PINS \
     X_MS1_PIN, X_MS2_PIN, Y_MS1_PIN, Y_MS2_PIN, Z_MS1_PIN, Z_MS2_PIN \
   }
@@ -478,19 +561,10 @@
   #define AVR_MOSI_PIN 51
   #define AVR_SS_PIN   53
 #elif defined(__AVR_AT90USB1287__) || defined(__AVR_AT90USB1286__) || defined(__AVR_AT90USB646__) || defined(__AVR_AT90USB647__)
-  #if ENABLED(AT90USBxx_TEENSYPP_ASSIGNMENTS)
-    // Teensy pin assignments
-    #define AVR_SCK_PIN  21
-    #define AVR_MISO_PIN 23
-    #define AVR_MOSI_PIN 22
-    #define AVR_SS_PIN   20
-  #else
-    // Traditional pin assignments
-    #define AVR_SCK_PIN  9
-    #define AVR_MISO_PIN 11
-    #define AVR_MOSI_PIN 10
-    #define AVR_SS_PIN   8
-  #endif
+  #define AVR_SCK_PIN  21
+  #define AVR_MISO_PIN 23
+  #define AVR_MOSI_PIN 22
+  #define AVR_SS_PIN   20
 #elif defined(__AVR_ATmega1281__) || defined(__AVR_ATmega2561__)
   #define AVR_SCK_PIN  10
   #define AVR_MISO_PIN 12
@@ -511,4 +585,4 @@
   #define SS_PIN   AVR_SS_PIN
 #endif
 
-#endif //__PINS_H
+#endif // __PINS_H__

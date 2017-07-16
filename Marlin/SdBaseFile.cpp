@@ -674,7 +674,7 @@ bool SdBaseFile::open(SdBaseFile* dirFile,
       index = 0;
     }
     // initialize as empty file
-    memset(p, 0, sizeof(dir_t));
+    memset(p, 0, sizeof(*p));
     memcpy(p->name, dname, 11);
 
     // set timestamps
@@ -1819,7 +1819,7 @@ fail:
 //------------------------------------------------------------------------------
 // suppress cpplint warnings with NOLINT comment
 #if ALLOW_DEPRECATED_FUNCTIONS && !defined(DOXYGEN)
-  void (*SdBaseFile::oldDateTime_)(uint16_t& date, uint16_t& time) = 0;  // NOLINT
+  void (*SdBaseFile::oldDateTime_)(uint16_t &date, uint16_t &time) = 0;  // NOLINT
 #endif  // ALLOW_DEPRECATED_FUNCTIONS
 
 
