@@ -6,17 +6,26 @@ if len(sys.argv) != 2:
     print("Usage: swap_cf.py CONFIGNAME")
     exit(0)
 
-config_file_name = "Configuration_%s.h" % sys.argv[1]
 current_dir = os.path.dirname(os.path.realpath(__file__))
-config_file_path = os.path.join(current_dir, config_file_name)
-marlin_config_path = os.path.join(current_dir, "Marlin/Configuration.h")
+template_file_names = ["Configuration%s.h", "Configuration_adv%s.h"]
+marlin_config_paths = [os.path.join(current_dir, "Marlin/" + f % '') for f in template_file_names]
+config_paths = [os.path.join(current_dir, f % ("_" + sys.argv[1])) for f in template_file_names]
 
-if os.path.exists(config_file_path):
-    print("Switching to config file: %s." % config_file_name)
-    try:
-        os.remove(marlin_config_path)
-    except OSError:
-        pass
-    os.symlink(config_file_path, marlin_config_path)
-else:
-    print("Could not find configuration file: [%s]." % config_file_path)
+if not os.path.isfile(config_paths[1]):
+    print "%s not found, using base." % config_paths[1]
+    config_paths[1] = os.path.join(current_dir,"Configuration_adv_base.h")
+
+print marlin_config_paths
+print config_paths
+
+
+for i in range(0, 2):
+    if os.path.exists(config_paths[i]):
+        print("Switching to config file: %s." % config_paths[i])
+        try:
+            os.remove(marlin_config_paths[i])
+        except OSError:
+            pass
+        os.symlink(config_paths[i], marlin_config_paths[i])
+    else:
+        print("Could not find configuration file: [%s]." % config_paths[i])
