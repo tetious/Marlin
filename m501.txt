@@ -1,0 +1,92 @@
+## FT-2020 7-24-2017
+Send: M501
+Recv: echo:V39 stored settings retrieved (465 bytes; crc 12858)
+Recv: echo:  G21    ; Units in mm
+Recv: echo:  M149 C ; Units in Celsius
+Recv: 
+Recv: echo:Filament settings: Disabled
+Recv: echo:  M200 D1.75
+Recv: echo:  M200 D0
+Recv: echo:Steps per unit:
+Recv: echo:  M92 X80.00 Y80.00 Z4000.00 E93.00
+Recv: echo:Maximum feedrates (units/s):
+Recv: echo:  M203 X300.00 Y300.00 Z3.00 E25.00
+Recv: echo:Maximum Acceleration (units/s2):
+Recv: echo:  M201 X2000 Y2000 Z5 E1000
+Recv: echo:Acceleration (units/s2): P<print_accel> R<retract_accel> T<travel_accel>
+Recv: echo:  M204 P1000.00 R1000.00 T1000.00
+Recv: echo:Advanced: S<min_feedrate> T<min_travel_feedrate> B<min_segment_time_ms> X<max_xy_jerk> Z<max_z_jerk> E<max_e_jerk>
+Recv: echo:  M205 S0.00 T0.00 B20000 X20.00 Y20.00 Z0.40 E5.00
+Recv: echo:Home offset:
+Recv: echo:  M206 X0.00 Y0.00 Z0.00
+Recv: echo:Material heatup parameters:
+Recv: echo:  M145 S0 H180 B70 F0
+Recv:   M145 S1 H240 B110 F0
+Recv: echo:PID settings:
+Recv: echo:  M301 P24.87 I1.64 D94.12
+Recv: echo:  M304 P166.35 I9.84 D703.16
+
+
+## FT-5 7-15-2017
+
+
+## Fabrikator 7-15-2017
+Send: M501
+Recv: echo:Stored settings retrieved
+Recv: echo:Steps per unit:
+Recv: echo:  M92 X80.00 Y80.00 Z1600.00 E95.00
+Recv: echo:Maximum feedrates (mm/s):
+Recv: echo:  M203 X500.00 Y500.00 Z10.00 E25.00
+Recv: echo:Maximum Acceleration (mm/s2):
+Recv: echo:  M201 X3000 Y3000 Z30 E10000
+Recv: echo:Acceleration: S=acceleration, T=retract acceleration
+Recv: echo:  M204 S1000.00 T3000.00
+Recv: echo:Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms), X=maximum XY jerk (mm/s),  Z=maximum Z jerk (mm/s),  E=maximum E jerk (mm/s)
+Recv: echo:  M205 S0.00 T0.00 B20000 X20.00 Z0.40 E5.00
+Recv: echo:Home offset (mm):
+Recv: echo:  M206 X0.00 Y0.00 Z0.20
+Recv: echo:PID settings:
+Recv: echo:   M301 P22.20 I1.08 D114.00
+Recv: ok
+Send: M501
+Recv: echo:Stored settings retrieved
+Recv: echo:Steps per unit:
+Recv: echo:  M92 X80.00 Y80.00 Z1600.00 E95.00
+Recv: echo:Maximum feedrates (mm/s):
+Recv: echo:  M203 X500.00 Y500.00 Z10.00 E25.00
+Recv: echo:Maximum Acceleration (mm/s2):
+Recv: echo:  M201 X3000 Y3000 Z30 E10000
+Recv: echo:Acceleration: S=acceleration, T=retract acceleration
+Recv: echo:  M204 S1000.00 T3000.00
+Recv: echo:Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms), X=maximum XY jerk (mm/s),  Z=maximum Z jerk (mm/s),  E=maximum E jerk (mm/s)
+Recv: echo:  M205 S0.00 T0.00 B20000 X20.00 Z0.40 E5.00
+Recv: echo:Home offset (mm):
+Recv: echo:  M206 X0.00 Y0.00 Z0.20
+Recv: echo:PID settings:
+Recv: echo:   M301 P22.20 I1.08 D114.00
+Recv: 
+
+# glide
+Send: M501
+Recv: echo:V24 stored settings retrieved (398 bytes)
+Recv: echo:Steps per unit:
+Recv: echo:  M92 X100.00 Y100.00 Z400.00 E186.00
+Recv: echo:Maximum feedrates (mm/s):
+Recv: echo:  M203 X300.00 Y300.00 Z5.00 E50.00
+Recv: echo:Maximum Acceleration (mm/s2):
+Recv: echo:  M201 X9000 Y9000 Z100 E10000
+Recv: echo:Accelerations: P=printing, R=retract and T=travel
+Recv: echo:  M204 P1000.00 R3000.00 T3000.00
+Recv: echo:Advanced variables: S=Min feedrate (mm/s), T=Min travel feedrate (mm/s), B=minimum segment time (ms), X=maximum XY jerk (mm/s),  Z=maximum Z jerk (mm/s),  E=maximum E jerk (mm/s)
+Recv: echo:  M205 S0.00 T0.00 B20000 X20.00 Z0.40 E5.00
+Recv: echo:Home offset (mm)
+Recv: echo:  M206 X0.00 Y0.00 Z0.00
+Recv: echo:PID settings:
+Recv: echo:  M301 P22.20 I1.08 D114.00
+Recv: echo:Filament settings: Disabled
+Recv: echo:  M200 D3.00
+Recv: echo:  M200 D0
+Recv: echo:Z-Probe Offset (mm):
+Recv: echo:  M851 Z-1.50
+Recv: ok
+
