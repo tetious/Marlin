@@ -116,6 +116,7 @@ tags
 *.dSYM/
 *.su
 Marlin/Configuration.h
+Marlin/Configuration_adv.h
 
 # PlatformIO files/dirs
 .pio*

@@ -126,7 +126,7 @@
 
 // Optional custom name for your RepStrap or other custom machine
 // Displayed in the LCD "Ready" message
-//#define CUSTOM_MACHINE_NAME "3D Printer"
+#define CUSTOM_MACHINE_NAME "Glide"
 
 // Define this to set a unique identifier for this printer, (Used by some programs to differentiate between machines)
 // You can use an online service to generate a random UUID. (eg http://www.uuidgenerator.net/version4)
@@ -1477,6 +1477,13 @@
 // TinyBoy2 128x64 OLED / Encoder Panel
 //
 //#define OLED_PANEL_TINYBOY2
+
+#define U8GLIB_SH1106
+#define ULTIPANEL
+#define NEWPANEL
+#define REVERSE_ENCODER_DIRECTION
+#define REVERSE_MENU_DIRECTION
+
 
 //=============================================================================
 //=============================== Extra Features ==============================
