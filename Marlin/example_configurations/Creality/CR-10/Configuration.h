@@ -335,12 +335,12 @@
 
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
-// Stock CR-10 tuned for 70C
+  // Stock CR-10 tuned for 70C
   #define  DEFAULT_Kp 22.57
   #define  DEFAULT_Ki 1.72
   #define  DEFAULT_Kd 73.96
 
-// Ultimaker
+  // Ultimaker
   //#define  DEFAULT_Kp 22.2
   //#define  DEFAULT_Ki 1.08
   //#define  DEFAULT_Kd 114
@@ -561,7 +561,6 @@
 #define DEFAULT_ZJERK                  2.7
 #define DEFAULT_EJERK                  5.0
 
-
 //===========================================================================
 //============================= Z Probe Options =============================
 //===========================================================================
@@ -603,7 +602,7 @@
  * Probe Type
  *
  * Allen Key Probes, Servo Probes, Z-Sled Probes, FIX_MOUNTED_PROBE, etc.
- * You must activate one of these to use Auto Bed Leveling below.
+ * Activate one of these to use Auto Bed Leveling below.
  */
 
 /**
@@ -634,14 +633,15 @@
 #endif
 
 /**
- * Enable if probing seems unreliable. Heaters and/or fans - consistent with the
- * options selected below - will be disabled during probing so as to minimize
- * potential EM interference by quieting/silencing the source of the 'noise' (the change
- * in current flowing through the wires).  This is likely most useful to users of the
- * BLTouch probe, but may also help those with inductive or other probe types.
+ * Enable one or more of the following if probing seems unreliable.
+ * Heaters and/or fans can be disabled during probing to minimize electrical
+ * noise. A delay can also be added to allow noise and vibration to settle.
+ * These options are most useful for the BLTouch probe, but may also improve
+ * readings with inductive probes and piezo sensors.
  */
 //#define PROBING_HEATERS_OFF       // Turn heaters off when probing
 //#define PROBING_FANS_OFF          // Turn fans off when probing
+//#define DELAY_BEFORE_PROBING 200  // (ms) To prevent vibrations from triggering piezo sensors
 
 // A probe that is deployed and stowed with a solenoid pin (SOL1_PIN)
 //#define SOLENOID_PROBE
@@ -765,12 +765,16 @@
 
 // @section machine
 
-// Travel limits after homing (units are in mm)
+// The size of the print bed
+#define X_BED_SIZE 300
+#define Y_BED_SIZE 300
+
+// Travel limits (mm) after homing, corresponding to endstop positions.
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS 300
-#define Y_MAX_POS 300
+#define X_MAX_POS X_BED_SIZE
+#define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 400
 
 // If enabled, axes won't move below MIN_POS in response to movement commands.
@@ -977,8 +981,8 @@
 //#define Z_SAFE_HOMING
 
 #if ENABLED(Z_SAFE_HOMING)
-  #define Z_SAFE_HOMING_X_POINT ((X_MIN_POS + X_MAX_POS) / 2)    // X point for Z homing when homing all axis (G28).
-  #define Z_SAFE_HOMING_Y_POINT ((Y_MIN_POS + Y_MAX_POS) / 2)    // Y point for Z homing when homing all axis (G28).
+  #define Z_SAFE_HOMING_X_POINT ((X_BED_SIZE) / 2)    // X point for Z homing when homing all axis (G28).
+  #define Z_SAFE_HOMING_Y_POINT ((Y_BED_SIZE) / 2)    // Y point for Z homing when homing all axis (G28).
 #endif
 
 // Homing speeds (mm/m)
@@ -1014,6 +1018,7 @@
 //
 #define HOST_KEEPALIVE_FEATURE        // Disable this if your host doesn't like keepalive messages
 #define DEFAULT_KEEPALIVE_INTERVAL 2  // Number of seconds between "busy" messages. Set with M113.
+#define BUSY_WHILE_HEATING            // Some hosts require "busy" messages even during heating
 
 //
 // M100 Free Memory Watcher
@@ -1316,12 +1321,6 @@
 //#define ULTIPANEL
 
 //
-// Cartesio UI
-// http://mauk.cc/webshop/cartesio-shop/electronics/user-interface
-//
-//#define CARTESIO_UI
-
-//
 // PanelOne from T3P3 (via RAMPS 1.4 AUX2/AUX3)
 // http://reprap.org/wiki/PanelOne
 //
@@ -1402,6 +1401,12 @@
 // default with the BQ Hephestos 2 and Witbox 2.
 //
 //#define BQ_LCD_SMART_CONTROLLER
+
+//
+// Cartesio UI
+// http://mauk.cc/webshop/cartesio-shop/electronics/user-interface
+//
+//#define CARTESIO_UI
 
 //
 // ANET_10 Controller supported displays.
