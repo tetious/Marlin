@@ -15,10 +15,6 @@ if not os.path.isfile(config_paths[1]):
     print "%s not found, using base." % config_paths[1]
     config_paths[1] = os.path.join(current_dir,"Configuration_adv_base.h")
 
-print marlin_config_paths
-print config_paths
-
-
 for i in range(0, 2):
     if os.path.exists(config_paths[i]):
         print("Switching to config file: %s." % config_paths[i])
