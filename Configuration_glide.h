@@ -74,13 +74,14 @@
 // User-specified version info of this build to display in [Pronterface, etc] terminal window during
 // startup. Implementation of an idea by Prof Braino to inform user that any changes made to this
 // build by the user have been successfully uploaded into firmware.
-#define STRING_CONFIG_H_AUTHOR "(Glide - v2017-08-01.2)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "Glide [2017.08.08]" // Who made the changes.
 #define SHOW_BOOTSCREEN
 #define STRING_SPLASH_LINE1 SHORT_BUILD_VERSION // will be shown during bootup in line 1
-#define STRING_SPLASH_LINE2 WEBSITE_URL         // will be shown during bootup in line 2
+#define STRING_SPLASH_LINE2 STRING_CONFIG_H_AUTHOR         // will be shown during bootup in line 2
 
 #define AUTO_REPORT_TEMPERATURES
 #define EXTENDED_CAPABILITIES_REPORT
+#define BABYSTEPPING
 
 //
 // *** VENDORS PLEASE READ *****************************************************
@@ -126,7 +127,7 @@
 
 // Optional custom name for your RepStrap or other custom machine
 // Displayed in the LCD "Ready" message
-#define CUSTOM_MACHINE_NAME "Glide - v2017-08-01.2"
+#define CUSTOM_MACHINE_NAME STRING_CONFIG_H_AUTHOR
 
 // Define this to set a unique identifier for this printer, (Used by some programs to differentiate between machines)
 // You can use an online service to generate a random UUID. (eg http://www.uuidgenerator.net/version4)
@@ -728,7 +729,7 @@
 // Invert the stepper direction. Change (or reverse the motor connector) if an axis goes the wrong way.
 #define INVERT_X_DIR false
 #define INVERT_Y_DIR true
-#define INVERT_Z_DIR false
+#define INVERT_Z_DIR true
 
 // Enable this option for Toshiba stepper drivers
 //#define CONFIG_STEPPERS_TOSHIBA
@@ -756,15 +757,15 @@
 // @section machine
 
 // The size of the print bed
-#define X_BED_SIZE 200
-#define Y_BED_SIZE 200
+#define X_BED_SIZE 195
+#define Y_BED_SIZE 190
 
 // Travel limits after homing (units are in mm)
 #define X_MIN_POS 0
 #define Y_MIN_POS 0
 #define Z_MIN_POS 0
-#define X_MAX_POS X_BED_SIZE-5
-#define Y_MAX_POS Y_BED_SIZE-10
+#define X_MAX_POS X_BED_SIZE
+#define Y_MAX_POS Y_BED_SIZE
 #define Z_MAX_POS 200
 
 // If enabled, axes won't move below MIN_POS in response to movement commands.
@@ -1208,7 +1209,7 @@
  * you must uncomment the following option or it won't work.
  *
  */
-//#define SDSUPPORT
+#define SDSUPPORT
 
 /**
  * SD CARD: SPI SPEED
@@ -1264,7 +1265,7 @@
 //  If CLOCKWISE normally moves DOWN this makes it go UP.
 //  If CLOCKWISE normally moves UP this makes it go DOWN.
 //
-//#define REVERSE_MENU_DIRECTION
+#define REVERSE_MENU_DIRECTION
 
 //
 // Individual Axis Homing
@@ -1352,7 +1353,7 @@
 //
 // Note: Usually sold with a white PCB.
 //
-//#define REPRAP_DISCOUNT_SMART_CONTROLLER
+#define REPRAP_DISCOUNT_SMART_CONTROLLER
 
 //
 // GADGETS3D G3D LCD/SD Controller
@@ -1482,11 +1483,11 @@
 //
 //#define OLED_PANEL_TINYBOY2
 
-#define U8GLIB_SH1106
-#define ULTIPANEL
-#define NEWPANEL
-#define REVERSE_ENCODER_DIRECTION
-#define REVERSE_MENU_DIRECTION
+// #define U8GLIB_SH1106
+// #define ULTIPANEL
+// #define NEWPANEL
+// #define REVERSE_ENCODER_DIRECTION
+// #define REVERSE_MENU_DIRECTION
 
 
 //=============================================================================
