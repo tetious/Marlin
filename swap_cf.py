@@ -12,7 +12,7 @@ marlin_config_paths = [os.path.join(current_dir, "Marlin/" + f % '') for f in te
 config_paths = [os.path.join(current_dir, f % ("_" + sys.argv[1])) for f in template_file_names]
 
 if not os.path.isfile(config_paths[1]):
-    print "%s not found, using base." % config_paths[1]
+    print("%s not found, using base." % config_paths[1])
     config_paths[1] = os.path.join(current_dir,"Configuration_adv_base.h")
 
 for i in range(0, 2):
