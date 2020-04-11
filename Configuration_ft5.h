@@ -484,9 +484,9 @@
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
   // FT-5 with genuine E3D V6
-  #define  DEFAULT_Kp 16.61
-  #define  DEFAULT_Ki 0.97
-  #define  DEFAULT_Kd 71.44
+  #define  DEFAULT_Kp 18.59
+  #define  DEFAULT_Ki 1.09
+  #define  DEFAULT_Kd 79.18
 
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
   // Ultimaker
@@ -736,7 +736,7 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 100 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 94 }
 
 /**
  * Default Max Feed Rate (mm/s)
