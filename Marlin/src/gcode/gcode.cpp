@@ -180,13 +180,9 @@ void GcodeSuite::get_destination_from_command() {
   #if ENABLED(LASER_MOVE_POWER)
     // Set the laser power in the planner to configure this move
     if (parser.seen('S'))
-      cutter.inline_power(parser.value_int());
-    else {
-      #if ENABLED(LASER_MOVE_G0_OFF)
-        if (parser.codenum == 0)        // G0
-          cutter.inline_enabled(false);
-      #endif
-    }
+      cutter.inline_power(cutter.power_to_range(cutter_power_t(round(parser.value_float()))));
+    else if (ENABLED(LASER_MOVE_G0_OFF) && parser.codenum == 0) // G0
+      cutter.set_inline_enabled(false);
   #endif
 }
 
@@ -259,6 +255,10 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
 
       #if ENABLED(BEZIER_CURVE_SUPPORT)
         case 5: G5(); break;                                      // G5: Cubic B_spline
+      #endif
+
+      #if ENABLED(DIRECT_STEPPING)
+        case 6: G6(); break;                                      // G6: Direct Stepper Move
       #endif
 
       #if ENABLED(FWRETRACT)
@@ -467,7 +467,7 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
 
       case 105: M105(); return;                                   // M105: Report Temperatures (and say "ok")
 
-      #if FAN_COUNT > 0
+      #if HAS_FAN
         case 106: M106(); break;                                  // M106: Fan On
         case 107: M107(); break;                                  // M107: Fan Off
       #endif
@@ -544,7 +544,7 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
       case 120: M120(); break;                                    // M120: Enable endstops
       case 121: M121(); break;                                    // M121: Disable endstops
 
-      #if HOTENDS && HAS_LCD_MENU
+      #if HAS_HOTEND && HAS_LCD_MENU
         case 145: M145(); break;                                  // M145: Set material heatup parameters
       #endif
 
@@ -661,6 +661,10 @@ void GcodeSuite::process_parsed_command(const bool no_ok/*=false*/) {
 
       #if HAS_USER_THERMISTORS
         case 305: M305(); break;                                  // M305: Set user thermistor parameters
+      #endif
+
+      #if ENABLED(REPETIER_GCODE_M360)
+        case 360: M360(); break;                                  // M360: Firmware settings
       #endif
 
       #if ENABLED(MORGAN_SCARA)
