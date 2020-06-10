@@ -1,0 +1,35 @@
+Send: M503
+Recv: echo:  G21    ; Units in mm (mm)
+Recv: echo:  M149 C ; Units in Celsius
+Recv: 
+Recv: echo:; Filament settings: Disabled
+Recv: echo:  M200 D1.75
+Recv: echo:  M200 D0
+Recv: echo:; Steps per unit:
+Recv: echo: M92 X80.00 Y80.00 Z400.00 E94.00
+Recv: echo:; Maximum feedrates (units/s):
+Recv: echo:  M203 X500.00 Y500.00 Z12.00 E120.00
+Recv: echo:; Maximum Acceleration (units/s2):
+Recv: echo:  M201 X9000.00 Y9000.00 Z500.00 E10000.00
+Recv: echo:; Acceleration (units/s2): P<print_accel> R<retract_accel> T<travel_accel>
+Recv: echo:  M204 P1500.00 R1500.00 T1500.00
+Recv: echo:; Advanced: B<min_segment_time_us> S<min_feedrate> T<min_travel_feedrate> J<junc_dev>
+Recv: echo:  M205 B20000.00 S0.00 T0.00 J0.01
+Recv: echo:; Home offset:
+Recv: echo:  M206 X0.00 Y0.00 Z0.00
+Recv: echo:; Unified Bed Leveling:
+Recv: echo:  M420 S0 Z0.00
+Recv: 
+Recv: Unified Bed Leveling System v1.01 inactive
+Recv: 
+Recv: echo:; Active Mesh Slot: -1
+Recv: echo:; EEPROM can hold 16 meshes.
+Recv: 
+Recv: echo:; Material heatup parameters:
+Recv: echo:  M145 S0 H180 B70 F0
+Recv: echo:  M145 S1 H240 B110 F0
+Recv: echo:; PID settings:
+Recv: echo:  M301 P18.59 I1.09 D79.18
+Recv: echo:; Z-Probe Offset (mm):
+Recv: echo:  M851 X15.00 Y26.00 Z-1.35
+Recv: ok
